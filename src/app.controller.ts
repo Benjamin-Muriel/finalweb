@@ -25,10 +25,12 @@ export class AppController {
   }
 
 
-  // // Edit
-  // @Post('usuarios:id')
-  // editEstudiante(@Param('id') id: string, @Body() request: Request) {
-  //   return this.appService.edit(id, request);
-  // }
+  // Edit
+  @Post('usuarios:id')
+  editEstudiante(@Param('id') id: string, @Body() request: Request) {
+    return this.appService.edit(id, request);
+  }
+
+  
 
 }
