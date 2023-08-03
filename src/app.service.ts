@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { UserModel } from './models/User.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ProductoModel } from './models/Producto.entity';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectRepository(UserModel)
     private user:Repository<UserModel>,
+    @InjectRepository(ProductoModel)
+    private producto:Repository<ProductoModel>,
     // private readonly bcryptService: BcryptService,
   ) {}
   // Base de datos
@@ -42,7 +45,7 @@ export class AppService {
       const saltRounds = 10;
       const salt = bcrypt.genSaltSync(saltRounds);
       user.password = bcrypt.hashSync(password, salt);
-      this.user.save(user);
+      // this.user.save(user);
     return this.user.save(user);
   }
 
@@ -50,20 +53,29 @@ export class AppService {
     return this.user.findOneBy({id});
   }
 
-  public edit(id, json) {
-    this.listEstudiante[id - 1].nombre = json.nombre;
-    this.listEstudiante[id - 1].apellido = json.apellido;
-    this.listEstudiante[id - 1].edad = json.edad;
-    this.listEstudiante[id - 1].correo = json.correo;
-    this.listEstudiante[id - 1].celular = json.celular;
-    this.listEstudiante[id - 1].carrera = json.carrera;
-    return this.listEstudiante[id - 1];
+  // public edit(id, json) {
+  //   this.listEstudiante[id - 1].nombre = json.nombre;
+  //   this.listEstudiante[id - 1].apellido = json.apellido;
+  //   this.listEstudiante[id - 1].edad = json.edad;
+  //   this.listEstudiante[id - 1].correo = json.correo;
+  //   this.listEstudiante[id - 1].celular = json.celular;
+  //   this.listEstudiante[id - 1].carrera = json.carrera;
+  //   return this.listEstudiante[id - 1];
+  // }
+  public crearProducto(data) {
+    return this.producto.save(data);
   }
-
-  async deleteUser(id: number): Promise<void> {
-    await this.user.delete(id);
+  public verProductos() {
+    return this.producto.find();
   }
- 
-
-
+  public verProducto(id:number) {
+    return this.producto.findOneBy({id});
+  }
+  public actualizarProducto(id:number,data) {
+    return this.producto.update(id, data)
+    // return "Producto actualizado";
+  }
+  public eliminarProducto(id:number) {
+    return this.producto.delete(id);
+  }
 }

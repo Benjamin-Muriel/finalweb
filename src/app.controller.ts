@@ -1,4 +1,4 @@
-import { Body, Controller, Get,Delete, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request } from 'express';
 
@@ -6,10 +6,30 @@ import { Request } from 'express';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // Index
-  @Get('usuarios')
-  getEstudiante() {
-    return this.appService.index();
+  // crear
+  @Post('producto')
+  crearProducto(@Body() jsonRequest) {
+    return this.appService.crearProducto(jsonRequest);
+  }
+  // leer
+  @Get('producto')
+  verProductos() {
+    return this.appService.verProductos();
+  }
+  // leer
+  @Get('producto/:id')
+  verProducto(@Param('id') id: number) {
+    return this.appService.verProducto(id);
+  }
+  // actualizar
+  @Put('producto/:id')
+  actualizarProducto(@Param('id') id: number, @Body() jsonRequest) {
+    return this.appService.actualizarProducto(id, jsonRequest);
+  }
+  // eliminar
+  @Delete('producto/:id')
+  eliminarProducto(@Param('id') id: number) {
+    return this.appService.eliminarProducto(id);
   }
 
   // Create
@@ -25,16 +45,10 @@ export class AppController {
   }
 
 
-  // Edit
-  @Post('usuarios:id')
-  editEstudiante(@Param('id') id: string, @Body() request: Request) {
-    return this.appService.edit(id, request);
-  }
-
-  @Delete(':id')
-  async deleteUser(@Param('id') id: number): Promise<void> {
-    await this.appService.deleteUser(id);
-  }
-  
+  // // Edit
+  // @Post('usuarios:id')
+  // editEstudiante(@Param('id') id: string, @Body() request: Request) {
+  //   return this.appService.edit(id, request);
+  // }
 
 }

@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModel } from './models/User.entity';
+import { ProductoModel } from './models/Producto.entity';
 
 @Module({
   imports: [
@@ -11,11 +12,12 @@ import { UserModel } from './models/User.entity';
       database:'database.sqlite',
       entities: [
         // __dirname+'/**/*.entity{.ts, .js}'
-        UserModel
+        UserModel,
+        ProductoModel
       ],
       synchronize:true
     }),
-    TypeOrmModule.forFeature([UserModel])
+    TypeOrmModule.forFeature([UserModel,ProductoModel])
   ],
   controllers: [AppController],
   providers: [AppService],
