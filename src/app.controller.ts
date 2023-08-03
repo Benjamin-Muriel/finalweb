@@ -31,6 +31,10 @@ export class AppController {
     return this.appService.edit(id, request);
   }
 
+  @Delete(':id')
+  async deleteUser(@Param('id') id: number): Promise<void> {
+    await this.appService.deleteUser(id);
+  }
   
 
 }

@@ -59,7 +59,11 @@ export class AppService {
     this.listEstudiante[id - 1].carrera = json.carrera;
     return this.listEstudiante[id - 1];
   }
+
+  async deleteUser(id: number): Promise<void> {
+    await this.user.delete(id);
+  }
  
-  
+
 
 }
